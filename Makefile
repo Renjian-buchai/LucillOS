@@ -1,22 +1,38 @@
+# Targets 
 TARGET=i386
 FORMAT=elf
 
+# Programs
 CC=~/opt/cross/bin/$(TARGET)-$(FORMAT)-g++
-C=~/opt/cross/bin/$(TARGET)-$(FORMAT)-gcc
 LD=~/opt/cross/bin/$(TARGET)-$(FORMAT)-ld
 AS=nasm
 QEMU=qemu-system-$(TARGET)
 
-all: assemble compile link
+# CC flags
+INCLUDE=-Iinclude/
 
-assemble:
-	$(AS) -f elf32 src/bootloader.s -o build/bootloader.o
+# Translation groups and objects 
+CC_TLN_GROUPS=main print
+CC_OBJS=$(patsubst %, build/%.cc.o, $(CC_TLN_GROUPS))
 
-compile:
-	$(CC) -m32 -c src/main.cc -o build/main.o -nostdlib -ffreestanding -std=c++11 -mno-red-zone -fno-exceptions -fno-rtti -Wall -Wextra -Werror
+S_TLN_GROUPS=bootloader
+S_OBJS=$(patsubst %, build/%.s.o, $(S_TLN_GROUPS))
 
-link: 
-	$(LD) -melf_i386 build/main.o build/bootloader.o -o build/kernel.bin -nostdlib -T linker.ld
+.PHONY: all assemble run clean 
+
+all: clean $(S_OBJS) $(CC_OBJS) build/kernel.bin
+
+build/%.s.o: src/%.s
+	$(AS) -f elf32 $< -o $@
+
+build/%.cc.o: src/%.cc
+	$(CC) -m32 $(INCLUDE) -o $@ -c $< -nostdlib -ffreestanding -std=c++11 -mno-red-zone -fno-exceptions -fno-rtti -Wall -Wextra -Werror
+
+build/kernel.bin: $(CC_OBJS) $(S_OBJS)
+	$(LD) -m$(FORMAT)_$(TARGET) $^ -o $@ -nostdlib -T linker.ld
 
 run: 
 	$(QEMU) -fda build/kernel.bin
+
+clean: 
+	rm -r build/* 
