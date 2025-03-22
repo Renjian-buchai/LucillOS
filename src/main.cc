@@ -1,5 +1,6 @@
 #include "kprint.hh"
 #include "kstdint.hh"
+#include "kstr.hh"
 
 extern "C" void kmain() {
   //   const char *lucilla = "                             %\n"
@@ -30,7 +31,7 @@ extern "C" void kmain() {
   //
   //   ktd::print(lucilla);
   char thingy[2] = {0};
-  ktd::intToStr(sizeof(int), thingy);
+  ktd::intToStr(sizeof(short), thingy);
 
   ktd::print(thingy);
 

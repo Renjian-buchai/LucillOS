@@ -3,12 +3,24 @@
 
 namespace ktd {
 
-enum class base_t { dec, hex, bin, oct };
-
-int intToStr(int integral, char *str, base_t base = base_t::dec);
+using int32_t = long;
+using uint32_t = unsigned long;
+using int16_t = short;
+using uint16_t = unsigned short;
+using int8_t = char;
+using uint8_t = char;
+using size_t = uint32_t;
 
 } // namespace ktd
 
-using ktd::base_t;
+using ktd::int16_t;
+using ktd::int32_t;
+using ktd::int8_t;
+
+using ktd::uint16_t;
+using ktd::uint32_t;
+using ktd::uint8_t;
+
+using ktd::size_t;
 
 #endif
