@@ -1,1 +1,10 @@
 -Iinclude/
+-ffreestanding 
+-std=c++11 
+-mno-red-zone 
+-fno-exceptions 
+-fno-rtti 
+-Wall 
+-Wextra 
+-Werror
+-nostdlib

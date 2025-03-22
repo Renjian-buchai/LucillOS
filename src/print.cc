@@ -1,4 +1,4 @@
-#include "print.hh"
+#include "kprint.hh"
 
 /**
  * @brief Prints string to VGA
@@ -8,7 +8,7 @@
  * @note Len should be long, because longs are guaranteed to be >=32 bits
  * @return int Error code. Idk.
  */
-int print(const char *str) {
+int ktd::print(const char *str) {
   const short color = 0x0F00;
   const short width = 80; // For testing purposes
   // Pray that this is 16 bits
