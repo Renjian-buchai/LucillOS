@@ -1,6 +1,6 @@
 -Iinclude/
 -ffreestanding 
--std=c++11 
+-std=c++17 
 -mno-red-zone 
 -fno-exceptions 
 -fno-rtti 

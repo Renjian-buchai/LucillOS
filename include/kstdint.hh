@@ -8,7 +8,7 @@ using uint32_t = unsigned long;
 using int16_t = short;
 using uint16_t = unsigned short;
 using int8_t = char;
-using uint8_t = char;
+using uint8_t = unsigned char;
 using size_t = uint32_t;
 
 } // namespace ktd

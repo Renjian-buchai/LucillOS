@@ -12,7 +12,7 @@ QEMU=qemu-system-$(TARGET)
 INCLUDE=-Iinclude/
 
 # Translation groups and objects 
-CC_TLN_GROUPS=main print kstr kstdint
+CC_TLN_GROUPS=main print kstr kstdint kernel/idt kernel/keyboard
 CC_OBJS=$(patsubst %, build/%.cc.o, $(CC_TLN_GROUPS))
 
 S_TLN_GROUPS=bootloader
@@ -32,7 +32,8 @@ build/kernel.bin: $(CC_OBJS) $(S_OBJS)
 	$(LD) -m$(FORMAT)_$(TARGET) $^ -o $@ -nostdlib -T linker.ld
 
 run: 
-	$(QEMU) -fda build/kernel.bin
+	$(QEMU) -fda build/kernel.bin 
+	# -object input-linux,id=kbd1,evdev=/dev/input/by-id/KEYBOARD_NAME,grab_all=on,repeat=on
 
 clean: 
-	rm -r build/* 
+	rm -r build/*.o build/*/*.o -f 
