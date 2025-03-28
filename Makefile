@@ -12,7 +12,7 @@ QEMU=qemu-system-$(TARGET)
 INCLUDE=-Iinclude/
 
 # Translation groups and objects
-CC_TLN_GROUPS=main print kstr kstdint
+CC_TLN_GROUPS=main kernel/vga kernel/serial kstr kstdint
 # kernel/idt kernel/keyboard
 CC_OBJS=$(patsubst %, build/%.cc.o, $(CC_TLN_GROUPS))
 

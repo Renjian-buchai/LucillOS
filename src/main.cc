@@ -1,4 +1,5 @@
-#include "kprint.hh"
+#include "kernel/serial.hh"
+#include "kernel/vga.hh"
 
 extern "C" void kmain() {
   const char *lucilla = "                             %\n"
@@ -27,10 +28,9 @@ extern "C" void kmain() {
                         "    .=.::-:::::+.+%%%*..:: :**::*=---==+\n"
                         "  =#. :*#+:.:+*@%%%%*:::-=*::-:++*.+-+#***+ =%#";
 
-  ktd::vgaPrint(lucilla);
+  vga_t().print(lucilla);
 
-  ktd::serialInit();
-  ktd::print_serial("const char *str", 16);
+  serial_t().print("aoeu\naoeu");
 
   return;
 }

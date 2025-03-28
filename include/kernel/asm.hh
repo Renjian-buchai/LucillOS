@@ -1,15 +1,12 @@
-#if !defined(LUCILLOS_PRINT_HH_)
-#define LUCILLOS_PRINT_HH_
+#if !defined(KERNEL_BOOTLOADER_HH_)
+#define KERNEL_BOOTLOADER_HH_
 
-#include <kstdint.hh>
+#include "kstdint.hh"
 
-namespace ktd {
+extern "C" uint32_t _read_port(uint32_t portNumber);
+extern "C" uint32_t _write_port(uint32_t portNumber, uint32_t data);
 
-int32_t vgaInit();
-
-int32_t vgaPrint(const char *str);
-
-#define COM1 0x3f8 // COM1
+extern "C" uint32_t _load_IDT(uint32_t idtPointer);
 
 static inline void outb(uint16_t port, uint8_t val) {
   __asm__ volatile("outb %b0, %w1" : : "a"(val), "Nd"(port) : "memory");
@@ -27,10 +24,6 @@ static inline uint8_t inb(uint16_t port) {
   return ret;
 }
 
-int32_t serialInit();
-
-void print_serial(const char *str, size_t count);
-
-} // namespace ktd
+static inline void hlt() { __asm__ volatile("hlt"); }
 
 #endif
