@@ -6,6 +6,7 @@ SECTIONS {
 	{
         *(.boot)
 		*(.text)
+        *(.kernel)
 	}
     
     .rodata :

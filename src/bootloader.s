@@ -29,7 +29,8 @@ boot:
 	mov fs, ax
 	mov gs, ax
 	mov ss, ax
-	jmp CODE_SEG:boot2
+	extern kernel 
+	jmp CODE_SEG:kernel
 gdt_start:
 	dq 0x0
 gdt_code:
@@ -57,14 +58,8 @@ DATA_SEG equ gdt_data - gdt_start
 
 times 510 - ($-$$) db 0
 dw 0xaa55
-copy_target:
-bits 32
-boot2:
-	mov esp,kernel_stack_top
-	extern kmain
-	call kmain
-	cli
-	hlt
+
+copy_target:	
 
 section .bss
 align 4
